@@ -18,14 +18,12 @@ public class TimeEntryController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntryToCreate) {
         TimeEntry body = this.timeEntryRepository.create(timeEntryToCreate);
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 
     @GetMapping("/{timeEntryId}")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<TimeEntry> read(@PathVariable Long timeEntryId) {
         TimeEntry timeEntry = this.timeEntryRepository.find(timeEntryId);
         return (timeEntry == null) ? ResponseEntity.notFound().build() : ResponseEntity.ok().body(timeEntry);

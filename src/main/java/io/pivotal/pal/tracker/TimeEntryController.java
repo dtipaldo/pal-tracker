@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.sql.Time;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/time-entries")
@@ -19,19 +19,19 @@ public class TimeEntryController {
 
     @PostMapping
     public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntryToCreate) {
-        TimeEntry body = this.timeEntryRepository.create(timeEntryToCreate);
-        return ResponseEntity.status(HttpStatus.CREATED).body(body);
+        TimeEntry body = timeEntryRepository.create(timeEntryToCreate);
+        return new ResponseEntity(body, CREATED);
     }
 
     @GetMapping("/{timeEntryId}")
     public ResponseEntity<TimeEntry> read(@PathVariable Long timeEntryId) {
         TimeEntry timeEntry = this.timeEntryRepository.find(timeEntryId);
-        return (timeEntry == null) ? ResponseEntity.notFound().build() : ResponseEntity.ok().body(timeEntry);
+        return (timeEntry == null) ? ResponseEntity.notFound().build() : ResponseEntity.ok(timeEntry);
     }
 
     @GetMapping
     public ResponseEntity<List<TimeEntry>> list() {
-        return ResponseEntity.ok().body(this.timeEntryRepository.list());
+        return ResponseEntity.ok(this.timeEntryRepository.list());
     }
 
     @PutMapping("/{timeEntryId}")

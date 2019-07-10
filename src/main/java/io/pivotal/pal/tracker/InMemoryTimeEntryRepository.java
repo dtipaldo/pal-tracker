@@ -40,7 +40,7 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
                     timeEntry.getDate(),
                     timeEntry.getHours()
             );
-            inMemoryDataStore.put(id, timeEntryWithId);
+            inMemoryDataStore.replace(id, timeEntryWithId);
         }
         return inMemoryDataStore.get(id);
     }
